@@ -55,8 +55,8 @@
                         <td><span class="category-tag"><%= expense.category %></span></td>
                         <td>$<%= expense.amount.toFixed(2) %></td>
                         <td>
-                            <a href="/expenses/edit/<%= expense._id %>" class="btn" style="font-size: 0.9em; padding: 5px 10px;">Edit</a>
-                            <form action="/expenses/delete/<%= expense._id %>" method="POST" style="display: inline;">
+                            <a href="/dashboard/edit/<%= expense._id %>" class="btn" style="font-size: 0.9em; padding: 5px 10px;">Edit</a>
+                            <form action="/dashboard/delete/<%= expense._id %>" method="POST" style="display: inline;">
                                 <button type="submit" class="btn btn-danger" style="font-size: 0.9em; padding: 5px 10px; border: none; cursor: pointer;">Delete</button>
                             </form>
                         </td>
@@ -64,7 +64,7 @@
                 <% }); %>
             </table>
         <% } else { %>
-            <p>No expenses yet. <a href="/expenses/add">Add one now!</a></p>
+            <p>No expenses yet. <a href="/dashboard/expenseForm">Add one now!</a></p>
         <% } %>
 
         <h2>Category Breakdown</h2>
