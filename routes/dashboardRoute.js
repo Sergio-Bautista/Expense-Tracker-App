@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 const dashboardController = require('../controllers/dashboard');
-const { route } = require('./indexRoute');
 
 
 router.get('/', ensureAuth, dashboardController.getDashboard);
