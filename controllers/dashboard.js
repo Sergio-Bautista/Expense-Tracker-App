@@ -60,5 +60,29 @@ module.exports = {
         }catch(err){
             res.status(500).send(err.message);
             }
+    },
+    deleteExpense: async (req, res)=>{
+        console.log("USER:", req.user);
+        console.log("PARAMS:", req.params);
+        try{
+            if(!req.user){
+                return res.redirect('/login')
+            }
+
+            const id = req.params.id
+            const expense = Expense.findById(id)
+
+            if(!expense){
+                return res.status(404).send("Expense not found")
+            }
+
+            await Expense.findByIdAndDelete(id);
+            return res.redirect('/dashboard')
+
+        }catch(err){
+            res.status(500).send(err.message)
+            console.log(err);
+            res.redirect('/dashboard')
         }
+    }
 }
