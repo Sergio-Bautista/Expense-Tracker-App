@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Expense</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        form { background: #f0f0f0; padding: 20px; border-radius: 8px; }
+        form div { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        a { margin-left: 10px; text-decoration: none; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Expense</h1>
+        <form action="/dashboard/updateExpense/<%= expense._id %>" method="POST">
+            <div>
+                <label>Description</label>
+                <input type="text" name="description" value="<%= expense.description %>" required>
+            </div>
+            <div>
+                <label>Amount ($)</label>
+                <input type="number" name="amount" step="0.01" value="<%= expense.amount %>" required>
+            </div>
+            <div>
+                <label>Category</label>
+                <select name="category">
+                    <option value="Food" <%= expense.category === 'Food' ? 'selected' : '' %>>Food</option>
+                    <option value="Transport" <%= expense.category === 'Transport' ? 'selected' : '' %>>Transport</option>
+                    <option value="Entertainment" <%= expense.category === 'Entertainment' ? 'selected' : '' %>>Entertainment</option>
+                    <option value="Utilities" <%= expense.category === 'Utilities' ? 'selected' : '' %>>Utilities</option>
+                    <option value="Healthcare" <%= expense.category === 'Healthcare' ? 'selected' : '' %>>Healthcare</option>
+                    <option value="Shopping" <%= expense.category === 'Shopping' ? 'selected' : '' %>>Shopping</option>
+                    <option value="Other" <%= expense.category === 'Other' ? 'selected' : '' %>>Other</option>
+                </select>
+            </div>
+            <div>
+                <label>Date</label>
+                <input type="date" name="date" value="<%= expense.date.toISOString().split('T')[0] %>">
+            </div>
+            <button type="submit">Update Expense</button>
+            <a href="/dashboard">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
