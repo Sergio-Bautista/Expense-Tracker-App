@@ -36,26 +36,44 @@ module.exports = {
                budgets.forEach(b => {
                 budgetCategory[b.category] = (budgetCategory[b.category] || 0 ) + b.limit
                })
-               
-               const budgetCategoryTotals = {}
 
-                for (const category in budgetCategory) {
-                    const spent = budgetCategory[category];
-                
-                    const limit = budgets
-                        .filter(budget => budget.category === category)
-                        .reduce((sum, budget) => sum + budget.limit, 0);
-                
-                    const remaining = limit - spent;
-                    budgetCategoryTotals[category] = remaining
+                const budgetMap = {};
 
-                    // console.log("Category:", category);
-                    // console.log("Spent:", spent);
-                    // console.log("Limit:", limit);
-                    // console.log("Remaining:", remaining);
-                    console.log(categoryTotals);
-                    console.log(budgetCategory);
+                for (const b of budgets) {
+                    budgetMap[b.category] = (budgetMap[b.category] || 0) + b.limit;
                 }
+
+                const budgetCategoryTotals = {};
+
+                for (const category in budgetMap) {
+                    const spent = categoryTotals[category] || 0;
+                    const limit = budgetMap[category];
+
+                    budgetCategoryTotals[category] = limit - spent;
+                }
+
+                console.log(budgetCategoryTotals);
+
+
+               
+            //    const budgetCategoryTotals = {}
+
+            //     for (const category in budgetCategory) {
+            //         const spent = budgetCategory[category];
+                
+            //         const limit = budgets
+            //             .filter(budget => budget.category === category)
+            //             .reduce((sum, budget) => sum + budget.limit, 0);
+                
+            //         const remaining = limit - spent;
+            //         budgetCategoryTotals[category] = remaining
+
+            //         // console.log("Category:", category);
+            //         // console.log("Spent:", spent);
+            //         // console.log("Limit:", limit);
+            //         // console.log("Remaining:", remaining);
+            //         console.log(categoryTotals);
+            //         console.log(budgetCategory);
                 return res.render('dashboard.ejs', {
                     expenses: currentMonthExpenses,
                     totalSpent, 
