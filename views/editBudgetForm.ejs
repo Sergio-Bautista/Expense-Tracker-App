@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Expense</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        form { background: #f0f0f0; padding: 20px; border-radius: 8px; }
+        form div { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        a { margin-left: 10px; text-decoration: none; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Expense</h1>
+        <form action="/dashboard/updateBudget/<%= budget._id %>" method="POST">
+            <div>
+                <label>Limit ($)</label>
+                <input type="text" name="limit" value="<%= budget.limit %>" required>
+            </div>
+            <div>
+                <label>Category</label>
+                <select name="category">
+                    <option value="Food" <%= budget.category === 'Food' ? 'selected' : '' %>>Food</option>
+                    <option value="Transport" <%= budget.category === 'Transport' ? 'selected' : '' %>>Transport</option>
+                    <option value="Entertainment" <%= budget.category === 'Entertainment' ? 'selected' : '' %>>Entertainment</option>
+                    <option value="Utilities" <%= budget.category === 'Utilities' ? 'selected' : '' %>>Utilities</option>
+                    <option value="Healthcare" <%= budget.category === 'Healthcare' ? 'selected' : '' %>>Healthcare</option>
+                    <option value="Shopping" <%= budget.category === 'Shopping' ? 'selected' : '' %>>Shopping</option>
+                    <option value="Other" <%= budget.category === 'Other' ? 'selected' : '' %>>Other</option>
+                </select>
+            </div>
+            <div>
+                <label>Month</label>
+                <input type="month" name="month" value="<%= budget.month%>" required>
+            </div>
+            <button type="submit">Update Budget</button>
+            <a href="/dashboard">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
