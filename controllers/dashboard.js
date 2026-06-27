@@ -161,7 +161,7 @@ module.exports = {
                 return res.redirect('/login')
             }
             const id = req.params.id;
-            const expense = Expense.findById(id)
+            const expense = await Expense.findById(id)
             
             if(!expense){
                 return res.status(404).send("Expense not found")
@@ -182,6 +182,16 @@ module.exports = {
             res.redirect('/dashboard')
         }
     }, 
+    editBudgetForm: async (req, res) =>{
+        const id = req.params.id
+        const budget = await Budget.findById(id)
+
+        if(!budget){
+            return res.status(404).send("Budget not found!")
+        }
+
+        res.render('editBudgetForm.ejs', {budget})
+    },
     addNewBudget: async(req, res)=>{
         try{
             const { limit, category, month } = req.body;
@@ -200,6 +210,32 @@ module.exports = {
     },
     budgetForm: (req, res) =>{
         res.render('budgetForm.ejs')
-    }
+    }, 
+    updateBudget: async (req, res) =>{
+        try{
+            if(!req.user){
+                return res.redirect('/login');
+            }
+            const id = req.params.id;
+            const budget = await Budget.findById(id);
+
+            if(!budget){
+                return res.status(404).send("Budget not found")
+            }
+
+            const { limit, category, month} = req.body;
+
+            await Budget.findByIdAndUpdate(id, {
+                limit, 
+                category, 
+                month
+            });
+            res.redirect('/dashboard')
+
+        }catch(err){
+            res.status(500).send(err.message);
+            res.redirect('/dashboard')
+        }
+    }, 
     
 }
