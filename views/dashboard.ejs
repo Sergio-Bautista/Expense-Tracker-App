@@ -24,6 +24,7 @@
         <h1>💰 Expense Tracker</h1>
         <div class="actions">
             <a href="/dashboard/expenseForm" class="btn">+ Add Expense</a>
+            <a href="/dashboard/budgetForm" class="btn">+ Add Budget</a>
             <a href="/logout" class="btn btn-danger">Logout</a>
         </div>
 
@@ -32,10 +33,27 @@
                 <h3>Total Spent This Month</h3>
                 <div class="amount">$<%= totalSpent.toFixed(2) %></div>
             </div>
+            
             <div class="summary-box">
                 <h3>Expenses</h3>
                 <div class="amount"><%= expenses.length %></div>
             </div>
+            
+            <div class="summary-box">
+                <h3>Budget Money Left</h3>
+                    <% for (const category in budgetCategoryTotals) { %>
+                        <div class="amount">
+                            <%= category %>: $<%= budgetCategoryTotals[category] %> left
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            
+            <div class="summary-box">
+                <h3>Total Budgets</h3>
+                <div class="amount"><%= budgets.length %></div>
+            </div>
+            
         </div>
 
         <h2>Expenses for <%= currentMonth %></h2>
@@ -55,8 +73,8 @@
                         <td><span class="category-tag"><%= expense.category %></span></td>
                         <td>$<%= expense.amount.toFixed(2) %></td>
                         <td>
-                            <a href="/dashboard/editForm/<%= expense._id %>" class="btn" style="font-size: 0.9em; padding: 5px 10px;">Edit</a>
-                            <form action="/dashboard/delete/<%= expense._id %>" method="POST" style="display: inline;">
+                            <a href="/dashboard/editExpenseForm/<%= expense._id %>" class="btn" style="font-size: 0.9em; padding: 5px 10px;">Edit</a>
+                            <form action="/dashboard/deleteExpense/<%= expense._id %>" method="POST" style="display: inline;">
                                 <button type="submit" class="btn btn-danger" style="font-size: 0.9em; padding: 5px 10px; border: none; cursor: pointer;">Delete</button>
                             </form>
                         </td>
@@ -67,12 +85,50 @@
             <p>No expenses yet. <a href="/dashboard/expenseForm">Add one now!</a></p>
         <% } %>
 
+
+        <h2>Budgets for <%= currentMonth %></h2>
+        <% if (budgets.length > 0) { %>
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Limit</th>
+                    <th>Actions</th>
+                </tr>
+                <% budgets.forEach(budget => { %>
+                    <tr>
+                        <td><span class="category-tag"><%= budget.category %></span></td>
+                        <td>$<%= budget.limit.toFixed(2) %></td>
+                        <td>
+                            <a href="/dashboard/editBudgetForm/<%= budget._id %>" class="btn" style="font-size: 0.9em; padding: 5px 10px;">Edit</a>
+                            <form action="/dashboard/deleteBudget/<%= budget._id %>" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger" style="font-size: 0.9em; padding: 5px 10px; border: none; cursor: pointer;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </table>
+        <% } else { %>
+            <p>No budgets yet. <a href="/dashboard/expenseForm">Add one now!</a></p>
+        <% } %>
+
+
+
+
+
         <h2>Category Breakdown</h2>
         <ul>
             <% Object.entries(categoryTotals).forEach(([category, total]) => { %>
                 <li><%= category %>: $<%= total.toFixed(2) %></li>
             <% }); %>
         </ul>
+
+        <h2>Budget Breakdown</h2>
+        <ul>
+            <% Object.entries(budgetCategoryTotals).forEach(([category, total]) => { %>
+                <li><%= category %>: $<%= total.toFixed(2) %></li>
+            <% }); %>
+        </ul>
+
     </div>
 </body>
 </html>
