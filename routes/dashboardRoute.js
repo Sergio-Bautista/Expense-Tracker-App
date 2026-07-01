@@ -11,10 +11,11 @@ router.get('/editExpenseForm/:id', ensureAuth, dashboardController.editExpenseFo
 router.get('/editBudgetForm/:id', ensureAuth, dashboardController.editBudgetForm)
 
 router.post('/addNewExpense', dashboardController.addNewExpense)
-router.post('/delete/:id', ensureAuth, dashboardController.deleteExpense)
+router.post('/deleteExpense/:id', ensureAuth, dashboardController.deleteExpense)
 router.post('/updateExpense/:id', ensureAuth, dashboardController.updateExpense)
 router.post('/addNewBudget', dashboardController.addNewBudget)
 router.post('/updateBudget/:id', ensureAuth, dashboardController.updateBudget)
+router.post('/deleteBudget/:id', ensureAuth, dashboardController.deleteBudget)
 
 
 module.exports = router;
