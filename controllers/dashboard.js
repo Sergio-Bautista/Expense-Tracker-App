@@ -237,5 +237,25 @@ module.exports = {
             res.redirect('/dashboard')
         }
     }, 
+    deleteBudget: async (req, res) =>{
+        try{
+            if(!req.user){
+                return res.redirect('/login')
+            }
+            const id = req.params.id
+            const expense = await Budget.findById(id)
+
+            if(!expense){
+                return res.status(404).send("Budget not found")
+            }
+
+            await Budget.findByIdAndDelete(id);
+            return res.redirect('/dashboard')
+
+        }catch(err){
+            res.status(500).send(err.message)
+            res.redirect('/dashboard')
+        }
+    }
     
 }
